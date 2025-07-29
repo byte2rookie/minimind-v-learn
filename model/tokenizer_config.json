@@ -1,0 +1,134 @@
+{
+    "add_bos_token": false,
+    "add_eos_token": false,
+    "add_prefix_space": false,
+    "added_tokens_decoder": {
+        "0": {
+            "content": "<|endoftext|>",
+            "lstrip": false,
+            "normalized": false,
+            "rstrip": false,
+            "single_word": false,
+            "special": true
+        },
+        "1": {
+            "content": "<|im_end|>",
+            "lstrip": false,
+            "normalized": false,
+            "rstrip": false,
+            "single_word": false,
+            "special": true
+        },
+        "2": {
+            "content": "<|im_start|>",
+            "lstrip": false,
+            "normalized": false,
+            "rstrip": false,
+            "single_word": false,
+            "special": true
+        },
+        "3": {
+            "content": "<pad>",
+            "lstrip": false,
+            "normalized": false,
+            "rstrip": false,
+            "single_word": false,
+            "special": true
+        },
+        "4": {
+            "content": "<mask>",
+            "lstrip": false,
+            "normalized": false,
+            "rstrip": false,
+            "single_word": false,
+            "special": true
+        },
+        "5": {
+            "content": "<s>",
+            "lstrip": false,
+            "normalized": false,
+            "rstrip": false,
+            "single_word": false,
+            "special": true
+        },
+        "6": {
+            "content": "</s>",
+            "lstrip": false,
+            "normalized": false,
+            "rstrip": false,
+            "single_word": false,
+            "special": true
+        },
+        "7": {
+            "content": "<unk>",
+            "lstrip": false,
+            "normalized": false,
+            "rstrip": false,
+            "single_word": false,
+            "special": true
+        },
+        "8": {
+            "content": "<UNK>",
+            "lstrip": false,
+            "normalized": false,
+            "rstrip": false,
+            "single_word": false,
+            "special": true
+        },
+        "9": {
+            "content": "<EOS>",
+            "lstrip": false,
+            "normalized": false,
+            "rstrip": false,
+            "single_word": false,
+            "special": true
+        },
+        "10": {
+            "content": "<zzy>",
+            "lstrip": false,
+            "normalized": false,
+            "rstrip": false,
+            "single_word": false,
+            "special": true
+        },
+        "11": {
+            "content": "<|s1|>",
+            "lstrip": false,
+            "normalized": false,
+            "rstrip": false,
+            "single_word": false,
+            "special": true
+        },
+        "12": {
+            "content": "<|s2|>",
+            "lstrip": false,
+            "normalized": false,
+            "rstrip": false,
+            "single_word": false,
+            "special": true
+        }
+    },
+    "additional_special_tokens": [
+        "<pad>",
+        "<mask>",
+        "<s>",
+        "</s>",
+        "<unk>",
+        "<UNK>",
+        "<EOS>",
+        "<zzy>",
+        "<|s1|>",
+        "<|s2|>"
+    ],
+    "bos_token": "<|im_start|>",
+    "clean_up_tokenization_spaces": false,
+    "eos_token": "<|im_end|>",
+    "legacy": true,
+    "model_max_length": 32768,
+    "pad_token": "<pad>",
+    "sp_model_kwargs": {},
+    "spaces_between_special_tokens": false,
+    "tokenizer_class": "PreTrainedTokenizerFast",
+    "unk_token": "<|endoftext|>",
+    "chat_template": "{% if messages[0]['role'] == 'system' %}{% set system_message = messages[0]['content'] %}{{ '<|im_start|>system\\n' + system_message + '<|im_end|>\\n' }}{% else %}{{ '<|im_start|>system\\nYou are a helpful assistant<|im_end|>\\n' }}{% endif %}{% for message in messages %}{% set content = message['content'] %}{% if message['role'] == 'user' %}{{ '<|im_start|>user\\n' + content + '<|im_end|>\\n<|im_start|>assistant\\n' }}{% elif message['role'] == 'assistant' %}{{ content + '<|im_end|>' + '\\n' }}{% endif %}{% endfor %}"
+}

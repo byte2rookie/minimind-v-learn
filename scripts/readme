@@ -1,0 +1,5 @@
+为什么需要训练tokenizer?
+因为我们需要把我们的word转化为特定的向量化数据，也就是word2vec，从而方便后续进行训练
+
+0_tokenizer.ipynb是tokenizer的jupyter上的参考文件
+train_my_tokenizer.ipynb则是我自己对训练tokenizer的理解和实现

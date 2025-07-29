@@ -24,4 +24,18 @@
 - scripts 存放一些杂项脚本
 - utils 存放一些通用类
 - images 存放宣发图片和讲解图片
+
 在搭起项目骨架后，使用gitignore文件忽略data的同步
+
+# 学习路径
+LLM主要分为tokenizer,model 两个部分的组成和训练<br>
+训练主要有pretrain,finetune,post-train 三个训练阶段<br>
+我主要借鉴[minimind构建记录](https://github.com/Nijikadesu/breakdown-minimind)<br>
+来分阶段实现tokenizer的训练、model的训练，以及最终的部署
+
+# 开始之前需要下载数据集
+我们在训练tokenizer和pretrain阶段，共用同一个处理好的数据集放在data文件夹下
+[modelscope下载](https://www.modelscope.cn/datasets/gongjy/minimind_dataset/files)
+
+# step1-tokenizer
+由于tokenizer并非Model的一部分，所以训练tokenizer的过程我们放在scripts下
