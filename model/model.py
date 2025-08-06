@@ -19,6 +19,7 @@ class RMSNorm(nn.Module):
         self.gamma = nn.Parameter(torch.ones(self.embed_dim))
     
     def forward(self,x):
+        print(f"X after RMSNorm: {x}")
         return x*self.gamma*torch.rsqrt(x.pow(2).mean(dim=-1,keepdim=True)+self.eps)
 
 
@@ -115,6 +116,7 @@ class GroupQueryAttention(nn.Module):
         attn_output = attn_output.transpose(1, 2).reshape(bs, seqlen, -1)
         attn_output = self.o_proj(attn_output)
         attn_output = self.res_dropout(attn_output)
+        print(f"attn_output = {attn_output}")
         return attn_output, past_kv
     
 
@@ -168,6 +170,7 @@ class Minimind_Block(nn.Module):
         ffn_output = self.ffn(x)
         # residual connection
         x = x + ffn_output
+        print(f"Block {self.layer_id} output : {x}")
         return x, past_kv
 
 class Minimind_Dense(nn.Module):
