@@ -215,18 +215,18 @@ class MinimindForCausalLM(PreTrainedModel,GenerationMixin):
         pos_cis = self.pos_cis[start_pos:start_pos+hidden_states.size(1)]
         past_kvs = []
         ### 
-        print("######FORWARD GENERATION######")
-        print(f"input_ids shape: {input_ids.shape if input_ids is not None else 'None'}")
+        # print("######FORWARD GENERATION######")
+        # print(f"input_ids shape: {input_ids.shape if input_ids is not None else 'None'}")
         for i, block in enumerate(self.minimind_dense.blocks):
             hidden_states, past_kv = block(hidden_states, pos_cis=pos_cis, past_key_value=past_key_values[i], use_cache=use_cache)
             if use_cache:
                 past_kvs.append(past_kv)
             else:
                 past_kvs.append(None)
-            print(f"Block {i+1}/{self.params.block_num} processed, hidden_states shape: {hidden_states.shape}")
+            # print(f"Block {i+1}/{self.params.block_num} processed, hidden_states shape: {hidden_states.shape}")
         hidden_states = self.rmsnorm(hidden_states)
         logits = self.lm_head(hidden_states)
-        print("######FORWARD GENERATION END######")
+        # print("######FORWARD GENERATION END######")
         self.OUT.__setitem__('logits', logits)
         self.OUT.__setitem__('past_key_values', past_kvs)
         self.OUT.__setitem__('hidden_states', hidden_states)
