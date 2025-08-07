@@ -19,7 +19,7 @@ class RMSNorm(nn.Module):
         self.gamma = nn.Parameter(torch.ones(self.embed_dim))
     
     def forward(self,x):
-        print(f"X after RMSNorm: {x}")
+        # print(f"X after RMSNorm: {x}")
         return x*self.gamma*torch.rsqrt(x.pow(2).mean(dim=-1,keepdim=True)+self.eps)
 
 
@@ -79,8 +79,8 @@ class GroupQueryAttention(nn.Module):
         self.res_dropout = nn.Dropout(config.attn_res_dropout)
         self.max_seqlen = config.max_seqlen
         #临时
-        mask = torch.full((1,1, self.max_seqlen, self.max_seqlen), float('-1e9'))
-        mask = torch.tril(mask, diagonal=0)
+        mask = torch.full((1,1, self.max_seqlen, self.max_seqlen), float('-inf'))
+        mask = torch.triu(mask, diagonal=1)
         self.register_buffer('mask', mask)
     def forward(self,x,
                 pos_cis=None,
@@ -106,7 +106,7 @@ class GroupQueryAttention(nn.Module):
         xv = repeat_kv(xv, self.rep_num).transpose(1,2)
         if self.Flash:
             attn_output = F.scaled_dot_product_attention(
-                xq, xk, xv, attn_mask=None, dropout_p=self.dropout,is_causal=True)
+                xq, xk, xv, attn_mask=None, dropout_p=self.attn_dropout,is_causal=True)
         else:
             scores = torch.matmul(xq, xk.transpose(-2, -1)) / (math.sqrt(self.head_dim))
             scores+= self.mask[:, :, :seqlen, :seqlen]
@@ -116,7 +116,7 @@ class GroupQueryAttention(nn.Module):
         attn_output = attn_output.transpose(1, 2).reshape(bs, seqlen, -1)
         attn_output = self.o_proj(attn_output)
         attn_output = self.res_dropout(attn_output)
-        print(f"attn_output = {attn_output}")
+        # print(f"attn_output = {attn_output}")
         return attn_output, past_kv
     
 
@@ -170,7 +170,7 @@ class Minimind_Block(nn.Module):
         ffn_output = self.ffn(x)
         # residual connection
         x = x + ffn_output
-        print(f"Block {self.layer_id} output : {x}")
+        # print(f"Block {self.layer_id} output : {x}")
         return x, past_kv
 
 class Minimind_Dense(nn.Module):
