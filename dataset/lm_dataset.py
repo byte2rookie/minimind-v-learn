@@ -46,7 +46,7 @@ class SFTDataset(Dataset):
         self.samples = self.load_data(data_path)
         self.bos_id = tokenizer('<|im_start|>assistant', add_special_tokens=False).input_ids
         self.eos_id = tokenizer('<|im_end|>', add_special_tokens=False).input_ids
-        print(f"bos_id={self.bos_id}, eos_id={self.eos_id}")
+        # print(f"bos_id={self.bos_id}, eos_id={self.eos_id}")
 
     def __len__(self):
         return len(self.samples)    
@@ -70,7 +70,7 @@ class SFTDataset(Dataset):
                 tokenize=False,
                 add_generation_prompt=False
             )
-            print(f"res={res}")
+            # print(f"res={res}")
             return res
     
     def _generate_loss_mask(self, input_ids):
